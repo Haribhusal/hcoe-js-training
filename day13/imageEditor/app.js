@@ -4,12 +4,16 @@ const fileInputHidden = document.getElementById('fileInputHidden'),
     filter = document.querySelectorAll('.filter button'),
     filterSlider = document.querySelector('.sliderWrapper input'),
     filterValue = document.querySelector('.labelwithValue .right'),
-    rotateFlipOptions = document.querySelectorAll('.rotateFlip button')
+    rotateFlipOptions = document.querySelectorAll('.rotateFlip button'),
+    resetFilterButton = document.querySelector('.bottom .left'),
+    downloadBtn = document.querySelector('.download');
 
 
 // let disableEditor = true
-
+let imageName;
 let brightness = 100, rotate = 0;
+
+
 
 const loadImage = () => {
     // fileInputHidden.click();
@@ -62,7 +66,45 @@ rotateFlipOptions.forEach(eachItem => {
     })
 })
 
+const resetFilter = () => {
+    console.log('i am clicked!')
 
+    brightness = "100";
+    rotate = 0;
+    filter[0].click();
+    applyFilter();
+}
+
+const downloadImage = () => {
+    downloadBtn.innerText = "Saving image...";
+    downloadBtn.classList.add("disable");
+
+
+    setTimeout(() => {
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = previewImage.naturalWidth;
+        canvas.height = previewImage.naturalHeight;
+
+        ctx.filter = `brightness(${brightness}%)`;
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        if (rotate !== 0) {
+            ctx.rotate(rotate * Math.PI / 180);
+        }
+        ctx.drawImage(previewImage, -canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+
+        const link = document.createElement("a");
+        link.download = imageName;
+        link.href = canvas.toDataURL();
+        link.click();
+        downloadBtn.innerText = "Save Image";
+        downloadBtn.classList.remove("disable");
+    });
+}
+
+
+downloadBtn.addEventListener('click', downloadImage);
+resetFilterButton.addEventListener('click', resetFilter)
 filterSlider.addEventListener('input', updateFilter)
 fileInputHidden.addEventListener('change', loadImage)
 chooseImage.addEventListener('click', function () {

@@ -88,6 +88,10 @@ body {
 
 }
 
+.resetFilterButton {
+    background-color: red !important;
+}
+
 .container .wrapper .preview {
     flex: 3;
 }
@@ -110,11 +114,13 @@ body {
 .container.disabled .filter,
 .container.disabled .sliderWrapper,
 .container.disabled .rotateFlip,
-.container .bottom .left,
-.container .bottom .right .download {
+.container.disabled .bottom .left,
+.container.disabled .bottom .right .download,
+.disable {
     opacity: 0.6;
     pointer-events: none;
 }
+
 
 .labelwithValue {
     display: flex !important;
