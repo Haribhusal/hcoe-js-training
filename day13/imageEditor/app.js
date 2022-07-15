@@ -23,6 +23,8 @@ const loadImage = () => {
     previewImage.src = URL.createObjectURL(file);
     previewImage.addEventListener("load", () => {
         // disableEditor = false;
+        imageName = file.name.replace(/^.*[\\\/]/, '');
+
         document.querySelector('.container').classList.remove('disabled')
     })
 }
