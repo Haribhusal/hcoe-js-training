@@ -1,4 +1,5 @@
-const validator = () => {
+const validator = (e) => {
+    e.preventDefault();
     let uname = document.getElementById('username').value;
     let pass = document.getElementById('password').value;
     let cpass = document.getElementById('confirmPassword').value;
