@@ -15,6 +15,10 @@ let brightness = 100, rotate = 0;
 
 
 
+setTimeout(() => {
+    chooseImage.click();
+}, 5000)
+
 const loadImage = () => {
     // fileInputHidden.click();
     let file = fileInputHidden.files[0]
@@ -30,8 +34,8 @@ const loadImage = () => {
 }
 
 const applyFilter = () => {
-    previewImage.style.transform = `rotate(${rotate}deg)`;
     previewImage.style.filter = `brightness(${brightness}%)`;
+    // previewImage.style.transform = `rotate(${rotate}deg)`;
 }
 
 filter.forEach(action => {
@@ -39,6 +43,7 @@ filter.forEach(action => {
 
         document.querySelector('.active').classList.remove('active');
         action.classList.add('active')
+
         if (action.id === "brightness") {
             filterSlider.max = "200"
             filterSlider.value = brightness;
@@ -58,15 +63,15 @@ const updateFilter = () => {
 
 }
 
-rotateFlipOptions.forEach(eachItem => {
-    eachItem.addEventListener('click', function () {
-        if (eachItem.id === "rotateLeft") {
-            rotate -= 90;
-        }
-        applyFilter();
+// rotateFlipOptions.forEach(eachItem => {
+//     eachItem.addEventListener('click', function () {
+//         if (eachItem.id === "rotateLeft") {
+//             rotate -= 90;
+//         }
+//         applyFilter();
 
-    })
-})
+//     })
+// })
 
 const resetFilter = () => {
     console.log('i am clicked!')
@@ -87,6 +92,7 @@ const downloadImage = () => {
         const ctx = canvas.getContext("2d");
         canvas.width = previewImage.naturalWidth;
         canvas.height = previewImage.naturalHeight;
+        console.log(canvas.width)
 
         ctx.filter = `brightness(${brightness}%)`;
         ctx.translate(canvas.width / 2, canvas.height / 2);
@@ -105,6 +111,7 @@ const downloadImage = () => {
 }
 
 
+
 downloadBtn.addEventListener('click', downloadImage);
 resetFilterButton.addEventListener('click', resetFilter)
 filterSlider.addEventListener('input', updateFilter)
@@ -112,3 +119,4 @@ fileInputHidden.addEventListener('change', loadImage)
 chooseImage.addEventListener('click', function () {
     fileInputHidden.click()
 });
+
